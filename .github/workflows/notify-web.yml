@@ -1,0 +1,20 @@
+name: Notify web to rebuild
+
+# When content is merged to main, tell pyladies-seoul-web to rebuild & deploy.
+on:
+  push:
+    branches: [main]
+
+# Required secret:
+#   WEB_DISPATCH_TOKEN   PAT with "actions: write" (or repo scope) on pyladies-seoul-web
+jobs:
+  dispatch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger pyladies-seoul-web deploy
+        run: |
+          curl -sf -X POST \
+            -H "Authorization: Bearer ${{ secrets.WEB_DISPATCH_TOKEN }}" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/PyLadiesKorea/pyladies-seoul-web/dispatches \
+            -d '{"event_type":"content-updated"}'

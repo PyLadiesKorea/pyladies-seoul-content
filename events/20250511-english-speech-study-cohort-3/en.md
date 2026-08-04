@@ -1,5 +1,6 @@
 ---
 title: English Interview & Speech Study (Cohort 3)
+location: Seoul
 ---
 
 **PyLadies Seoul English Interview Study Group: Cohort 3**

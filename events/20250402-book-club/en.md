@@ -1,5 +1,6 @@
 ---
 title: April 2025 Book Club
+location: Seoul
 ---
 
 Hello everyone! We're excited to invite you to our Monthly Book Club for Data Scientists :)

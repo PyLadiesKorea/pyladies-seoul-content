@@ -1,5 +1,6 @@
 ---
 title: 'Career Navigation Seminar: Finding Your Path Beyond the Glass Ceiling'
+location: Yongsan Verdium Friends Building 101, B1F, Jugobadda (Education Room)
 ---
 
 ***Reframing your career: Moving away from the Glass Ceiling to the Labyrinth and the tools to make you succeed.***

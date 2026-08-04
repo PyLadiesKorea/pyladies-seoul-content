@@ -1,5 +1,6 @@
 ---
 title: August 2025 Book Club
+location: Online
 ---
 
 **August Book Club Invitation: "A Prompt Engineer's Work Journal" - "Real-world Stories of Prompt Engineering from Korea's First Prompt Engineer"**

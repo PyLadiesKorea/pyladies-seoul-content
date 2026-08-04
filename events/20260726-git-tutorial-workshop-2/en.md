@@ -1,5 +1,6 @@
 ---
 title: Git Tutorial Workshop (2nd Edition)
+location: Seminar Room (4th Floor), Gwanak Youth Center, Sillim
 ---
 
 **[PyLadies Seoul] Git Tutorial Workshop (2nd Edition)**

@@ -1,5 +1,6 @@
 ---
 title: 'Practical DuckDB: From Large-Scale YouTube Data to Analysis'
+location: Re:Network, 5F, 47 Teheran-ro 6-gil, Gangnam-gu, Seoul
 ---
 
 **Practical DuckDB: From Large-Scale YouTube Data Collection to Analysis Using Vibe Coding**

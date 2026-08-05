@@ -26,7 +26,11 @@ jobs:
             exit 1
           fi
 
-          printf '%s\n' '{"event_type":"content-updated"}' | \
+          PAYLOAD=$(jq -cn \
+            --arg content_commit "$GITHUB_SHA" \
+            '{event_type:"content-updated",client_payload:{content_commit:$content_commit}}')
+
+          printf '%s\n' "$PAYLOAD" | \
             gh api \
               --method POST \
               --header "X-GitHub-Api-Version: 2022-11-28" \

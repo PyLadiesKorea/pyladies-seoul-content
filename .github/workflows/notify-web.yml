@@ -6,15 +6,29 @@ on:
     branches: [main]
 
 # Required secret:
-#   WEB_DISPATCH_TOKEN   PAT with "actions: write" (or repo scope) on pyladies-seoul-web
+#   WEB_DISPATCH_TOKEN   Fine-grained PAT scoped only to
+#                        PyLadiesKorea/pyladies-seoul-web with Contents: write for
+#                        POST /repos/{owner}/{repo}/dispatches.
+permissions: {}
+
 jobs:
   dispatch:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger pyladies-seoul-web deploy
+        env:
+          GH_TOKEN: ${{ secrets.WEB_DISPATCH_TOKEN }}
         run: |
-          curl -sf -X POST \
-            -H "Authorization: Bearer ${{ secrets.WEB_DISPATCH_TOKEN }}" \
-            -H "Accept: application/vnd.github+json" \
-            https://api.github.com/repos/PyLadiesKorea/pyladies-seoul-web/dispatches \
-            -d '{"event_type":"content-updated"}'
+          set -euo pipefail
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::WEB_DISPATCH_TOKEN is not configured"
+            exit 1
+          fi
+
+          printf '%s\n' '{"event_type":"content-updated"}' | \
+            gh api \
+              --method POST \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              --input - \
+              repos/PyLadiesKorea/pyladies-seoul-web/dispatches

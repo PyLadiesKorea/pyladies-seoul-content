@@ -20,3 +20,5 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Scan public Markdown
         run: python scripts/validate_content.py .
+      - name: Validate event bundle schema
+        run: python scripts/validate_content_schema.py .

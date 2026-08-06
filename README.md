@@ -27,6 +27,7 @@ content/
    ```
    - 날짜 `YYYYMMDD`(행사 시작일)를 앞에 → 자동 시간순 정렬.
    - **한글 제목은 파일명이 아니라 `ko.md` 안 `title:` 에** 적어요.
+   - 자동 검사 범위는 [`docs/CONTENT_SCHEMA.md`](docs/CONTENT_SCHEMA.md)를 따릅니다.
 
 2. 그 안에 **`ko.md`** (한국어):
 

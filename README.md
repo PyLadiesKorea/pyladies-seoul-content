@@ -132,6 +132,9 @@ A. ...
 - ⚠️ **이메일·전화번호는 절대 넣지 마세요.** 이 저장소는 공개예요.
 - 멤버가 나가면 그 폴더를 지우면 돼요.
 
+조직 연락처 allowlist 등 공개 멤버 연락처 보호 규칙은
+[`docs/CONTENT_PRIVACY.md`](docs/CONTENT_PRIVACY.md)를 따릅니다.
+
 ---
 
 ## Thanks to에 감사 인사 추가

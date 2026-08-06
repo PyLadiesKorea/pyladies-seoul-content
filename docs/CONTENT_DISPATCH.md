@@ -12,6 +12,12 @@
   워크플로를 실패시킨다.
 - 이 워크플로는 `main` push만 처리한다. dev PR 이벤트는 보내지 않는다.
 
+구현은 draft PR
+[#5](https://github.com/PyLadiesKorea/pyladies-seoul-content/pull/5)에서 dev 대상으로
+먼저 검토한다. workflow trigger가 `main`으로 제한되어 있으므로 이 코드를 dev에
+병합하는 것만으로 외부 dispatch가 발생하지 않는다. 실제 활성화는 별도 승인을 받은
+dev→main 승격 이후다.
+
 예시 payload:
 
 ```json

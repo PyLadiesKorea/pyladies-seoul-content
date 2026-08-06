@@ -27,7 +27,7 @@ frontmatter 값, 본문, 번역 내용과 다른 카테고리 schema는 검사�
 
 | 요구사항 ID | 검증 | 상태 | 남은 일 |
 |---|---|---|---|
-| CONTENT-SCHEMA-001 | 잘못된 직계 이벤트 폴더명과 누락된 `ko.md`를 거부하고 현재 전체 `events/`를 검사 | Missing | 실패 테스트, dependency-free validator, workflow 단계를 추가한다. |
+| CONTENT-SCHEMA-001 | `tests/test_validate_content_schema.py`, `scripts/validate_content_schema.py`, `.github/workflows/validate-content.yml`; 현재 42개 번들 scan | Covered | frontmatter와 다른 카테고리는 의도적으로 검사하지 않는다. |
 
 ## 변경 절차
 

@@ -26,7 +26,13 @@ jobs:
             exit 1
           fi
 
-          printf '%s\n' '{"event_type":"content-updated"}' | \
+          if [[ ! "${GITHUB_SHA:-}" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "::error::GITHUB_SHA must be a 40-character commit SHA"
+            exit 1
+          fi
+
+          printf '%s\n' \
+            "{\"event_type\":\"content-updated\",\"client_payload\":{\"content_commit\":\"${GITHUB_SHA}\"}}" | \
             gh api \
               --method POST \
               --header "X-GitHub-Api-Version: 2022-11-28" \

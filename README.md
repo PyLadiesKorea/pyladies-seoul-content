@@ -177,3 +177,6 @@ published: true
 1. 브랜치 만들고 파일 추가/수정
 2. PR 올리기 → 리뷰 → `main` 머지
 3. 몇 분 뒤 사이트에 반영 ✨
+
+`main` 머지 후 웹 저장소에 전달되는 커밋 SHA와 현재 수신 제한은
+[`docs/CONTENT_DISPATCH.md`](docs/CONTENT_DISPATCH.md)에 정리되어 있어요.

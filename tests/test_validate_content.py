@@ -64,8 +64,13 @@ class ContentPrivacyValidationTests(unittest.TestCase):
 
     def test_allows_intentionally_published_names_and_payment_details(self):
         self.write_markdown(
-            "events/example/ko.md",
-            "\n".join(("name: 공개 동의를 받은 표시 이름", "입금 계좌: 테스트은행")),
+            "members/example/ko.md",
+            "\n".join(
+                (
+                    "name: 공개 동의를 받은 표시 이름",
+                    "입금 계좌: 공개은행 123-456-7890",
+                )
+            ),
         )
 
         self.assertEqual(scan_tree(self.root), [])

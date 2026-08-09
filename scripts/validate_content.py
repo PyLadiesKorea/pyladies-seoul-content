@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reject personal contact data from public member Markdown content."""
+"""Reject personal contact data from public content Markdown bundles."""
 
 import argparse
 import re
@@ -15,7 +15,13 @@ ALLOWED_ORGANIZATION_EMAILS = frozenset(
         "seoul@pyladies.com",
     }
 )
-MEMBER_DIRECTORY = "members"
+PUBLIC_CONTENT_DIRECTORIES = (
+    "about",
+    "events",
+    "members",
+    "stories",
+    "thanks",
+)
 
 EMAIL_PATTERN = re.compile(
     r"\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}\b",
@@ -23,10 +29,15 @@ EMAIL_PATTERN = re.compile(
 )
 PHONE_PATTERN = re.compile(
     r"(?<!\d)"
+    r"(?:"
     r"(?:01[016789]|02|0(?:3[1-3]|4[1-4]|5[1-5]|6[1-4]|70))"
+    r"|\+82[ -]?(?:10|2|3[1-3]|4[1-4]|5[1-5]|6[1-4]|70)"
+    r")"
     r"[ -]?\d{3,4}[ -]?\d{4}"
     r"(?!\d)"
 )
+
+
 @dataclass(frozen=True)
 class Violation:
     rule_id: str
@@ -35,12 +46,13 @@ class Violation:
 
 
 def markdown_files(root: Path) -> Iterable[Path]:
-    member_directory = root / MEMBER_DIRECTORY
-    if not member_directory.is_dir():
-        return
-    for path in sorted(member_directory.rglob("*.md")):
-        if ".git" not in path.parts:
-            yield path
+    for directory_name in PUBLIC_CONTENT_DIRECTORIES:
+        content_directory = root / directory_name
+        if not content_directory.is_dir():
+            continue
+        for path in sorted(content_directory.rglob("*.md")):
+            if ".git" not in path.parts:
+                yield path
 
 
 def scan_line(path: Path, line_number: int, line: str) -> list[Violation]:

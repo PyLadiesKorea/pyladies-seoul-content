@@ -47,6 +47,10 @@
 
 - pull request와 `main`·`dev` push에서 개인정보 검사를 실행한다.
 - 위반이 하나라도 있으면 검사를 실패시켜 병합·배포 전에 수정하게 한다.
+- 저장소 ruleset 또는 branch protection에서 `privacy` 검사를 required status
+  check로 지정해야 실패한 검사가 병합을 기술적으로 차단한다. 2026-08-09
+  현재 `dev`는 보호되지 않으므로 설정 전까지 리뷰어가 수동으로 실패 병합을
+  금지한다.
 
 ## 검증표
 
@@ -57,7 +61,7 @@
 | CONTENT-PUBLIC-001 | `test_allows_intentionally_published_names_and_payment_details` | Covered |
 | CONTENT-CONSENT-001 | README 작성 규칙과 리뷰 체크 | Covered |
 | CONTENT-PII-003 | `test_failure_output_does_not_echo_detected_values` | Covered |
-| CONTENT-PII-004 | `.github/workflows/validate-content.yml` 테스트와 저장소 스캔 | Covered |
+| CONTENT-PII-004 | `.github/workflows/validate-content.yml` 테스트와 저장소 스캔 | 자동 검사 Covered; required check 설정 대기 |
 
 ## 대응 절차
 

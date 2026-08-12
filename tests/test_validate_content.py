@@ -21,25 +21,58 @@ class ContentPrivacyValidationTests(unittest.TestCase):
         return path
 
     def test_allows_reviewed_organization_contacts(self):
-        self.write_markdown(
-            "members/official/ko.md",
-            "\n".join(
-                (
-                    "seoul@pyladies.com",
-                    "coc@pyladies.com",
-                    "conduct-wg@python.org",
-                )
-            ),
-        )
+        for category in ("about", "events", "members", "stories", "thanks"):
+            self.write_markdown(
+                f"{category}/official/ko.md",
+                "\n".join(
+                    (
+                        "seoul@pyladies.com",
+                        "coc@pyladies.com",
+                        "conduct-wg@python.org",
+                    )
+                ),
+            )
 
         self.assertEqual(scan_tree(self.root), [])
 
-    def test_rejects_personal_email(self):
-        self.write_markdown("members/example/ko.md", "person@example.com")
+    def test_rejects_personal_email_in_every_public_content_category(self):
+        categories = ("about", "events", "members", "stories", "thanks")
+        for category in categories:
+            self.write_markdown(f"{category}/example/ko.md", "person@example.com")
+
+        violations = scan_tree(self.root)
+
+        self.assertEqual(
+            [item.rule_id for item in violations],
+            ["CONTENT-PII-001"] * len(categories),
+        )
+        self.assertEqual(
+            {item.path.parts[0] for item in violations},
+            set(categories),
+        )
+
+    def test_rejects_unreviewed_email_on_an_allowed_domain(self):
+        self.write_markdown("events/example/ko.md", "person@pyladies.com")
 
         violations = scan_tree(self.root)
 
         self.assertEqual([item.rule_id for item in violations], ["CONTENT-PII-001"])
+
+    def test_rejects_phone_number_in_every_public_content_category(self):
+        categories = ("about", "events", "members", "stories", "thanks")
+        for category in categories:
+            self.write_markdown(f"{category}/example/ko.md", "010-1234-5678")
+
+        violations = scan_tree(self.root)
+
+        self.assertEqual(
+            [item.rule_id for item in violations],
+            ["CONTENT-PII-002"] * len(categories),
+        )
+        self.assertEqual(
+            {item.path.parts[0] for item in violations},
+            set(categories),
+        )
 
     def test_rejects_phone_numbers_with_or_without_separators(self):
         self.write_markdown(
@@ -51,6 +84,8 @@ class ContentPrivacyValidationTests(unittest.TestCase):
                     "010 9876 5432",
                     "031-123-4567",
                     "070-1234-5678",
+                    "+82 10-1234-5678",
+                    "+82-2-1234-5678",
                 )
             ),
         )
@@ -59,19 +94,20 @@ class ContentPrivacyValidationTests(unittest.TestCase):
 
         self.assertEqual(
             [item.rule_id for item in violations],
-            ["CONTENT-PII-002"] * 5,
+            ["CONTENT-PII-002"] * 7,
         )
 
     def test_allows_intentionally_published_names_and_payment_details(self):
-        self.write_markdown(
-            "members/example/ko.md",
-            "\n".join(
-                (
-                    "name: 공개 동의를 받은 표시 이름",
-                    "입금 계좌: 공개은행 123-456-7890",
-                )
-            ),
-        )
+        for category in ("events", "thanks"):
+            self.write_markdown(
+                f"{category}/example/ko.md",
+                "\n".join(
+                    (
+                        "name: 공개 동의를 받은 표시 이름",
+                        "입금 계좌: 공개은행 123-456-7890",
+                    )
+                ),
+            )
 
         self.assertEqual(scan_tree(self.root), [])
 
@@ -103,10 +139,9 @@ class ContentPrivacyValidationTests(unittest.TestCase):
 
         self.assertEqual(scan_tree(self.root), [])
 
-    def test_only_scans_member_content(self):
+    def test_ignores_supporting_docs_outside_public_content_roots(self):
         self.write_markdown("docs/policy.md", "계좌번호를 공개하지 않습니다.")
         self.write_markdown("README.md", "Contact person@example.com in examples.")
-        self.write_markdown("events/example/ko.md", "name: 공개 행사 발표자")
 
         self.assertEqual(scan_tree(self.root), [])
 

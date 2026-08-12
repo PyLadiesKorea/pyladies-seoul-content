@@ -16,6 +16,10 @@ content/
 
 > 왜 언어별 파일이냐(gettext `.po` 아니고)는 `docs/I18N_CONTENT_TRANSLATION.md` 참고.
 
+> ⚠️ 이 저장소는 공개예요. 어떤 카테고리에도 개인 이메일이나 전화번호를
+> 넣지 마세요. 조직 연락처, 공개 동의를 받은 실명, 의도적으로 공개한
+> 입금정보의 기준은 [`docs/CONTENT_PRIVACY.md`](docs/CONTENT_PRIVACY.md)를 따릅니다.
+
 ---
 
 ## 새 이벤트 올리기
@@ -133,7 +137,7 @@ A. ...
 - ⚠️ **이메일·전화번호는 절대 넣지 마세요.** 이 저장소는 공개예요.
 - 멤버가 나가면 그 폴더를 지우면 돼요.
 
-조직 연락처 allowlist 등 공개 멤버 연락처 보호 규칙은
+조직 연락처 allowlist 등 공개 콘텐츠 연락처 보호 규칙은
 [`docs/CONTENT_PRIVACY.md`](docs/CONTENT_PRIVACY.md)를 따릅니다.
 
 ---

@@ -86,7 +86,7 @@ checkout `ref`로 사용하고, 이벤트와 허용 브랜치의 계보도 검�
 
 | 요구사항 ID | 검증 내용 | 테스트 | 상태 |
 |---|---|---|---|
-| CD-001 | main은 prod 이벤트와 정확한 SHA만 전송 | - | Missing |
-| CD-002 | dev는 dev 이벤트와 정확한 SHA만 전송 | - | Missing |
-| CD-003 | 토큰·SHA·브랜치 오류는 API 호출 전에 실패 | - | Missing |
-| CD-004 | 토큰이 payload·인자·출력에 노출되지 않음 | - | Missing |
+| CD-001 | main은 prod 이벤트와 정확한 SHA만 전송 | `test_main_dispatches_prod_event_with_exact_content_commit` | Covered |
+| CD-002 | dev는 dev 이벤트와 정확한 SHA만 전송 | `test_dev_dispatches_dev_event_with_exact_content_commit` | Covered |
+| CD-003 | 토큰·SHA·브랜치 오류는 API 호출 전에 실패 | `test_missing_token_fails_before_calling_github`, `test_non_full_commit_sha_fails_before_calling_github`, `test_unknown_or_missing_branch_fails_before_calling_github` | Covered |
+| CD-004 | 토큰이 payload·인자·출력에 노출되지 않음 | `test_token_is_not_exposed_in_payload_arguments_or_output`, `test_token_is_not_exposed_when_validation_fails` | Covered |

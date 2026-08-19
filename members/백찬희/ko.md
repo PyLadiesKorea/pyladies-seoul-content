@@ -1,7 +1,7 @@
 ---
 name: 백찬희
 type: organizer
-order: 2
+order: 3
 featured: true
 image: cover.webp
 links:

@@ -1,5 +1,6 @@
 ---
 title: June 2026 Book Club
+location: PyLadies Seoul Discord — Monthly-book-club voice channel
 ---
 
 **[PyLadies Book Club]**

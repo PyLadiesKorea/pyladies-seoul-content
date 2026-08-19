@@ -1,5 +1,6 @@
 ---
 title: Monthly Review Meeting
+location: Seoul
 ---
 
 Hello! As we wrap up March, we'd like to take some time to reflect on the past month's achievements and set new goals for the future. Let's share our experiences and accomplishments from the past month and support each other's growth.

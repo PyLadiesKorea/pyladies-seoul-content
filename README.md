@@ -8,11 +8,17 @@
 ```
 content/
 ├── events/     이벤트  (하나당 폴더)
+├── stories/    활동 후기·이야기
 ├── members/    멤버    (하나당 폴더)
-└── about/      행동강령 등
+├── about/      행동강령 등
+└── thanks/     후원·자원봉사·기여 감사 인사
 ```
 
 > 왜 언어별 파일이냐(gettext `.po` 아니고)는 `docs/I18N_CONTENT_TRANSLATION.md` 참고.
+
+> ⚠️ 이 저장소는 공개예요. 어떤 카테고리에도 개인 이메일이나 전화번호를
+> 넣지 마세요. 조직 연락처, 공개 동의를 받은 실명, 의도적으로 공개한
+> 입금정보의 기준은 [`docs/CONTENT_PRIVACY.md`](docs/CONTENT_PRIVACY.md)를 따릅니다.
 
 ---
 
@@ -25,6 +31,7 @@ content/
    ```
    - 날짜 `YYYYMMDD`(행사 시작일)를 앞에 → 자동 시간순 정렬.
    - **한글 제목은 파일명이 아니라 `ko.md` 안 `title:` 에** 적어요.
+   - 자동 검사 범위는 [`docs/CONTENT_SCHEMA.md`](docs/CONTENT_SCHEMA.md)를 따릅니다.
 
 2. 그 안에 **`ko.md`** (한국어):
 
@@ -49,12 +56,13 @@ content/
    ```markdown
    ---
    title: Git Tutorial Workshop (2nd Edition)
+   location: Seminar Room (4th Floor), Gwanak Youth Center, Sillim
    ---
 
    English body here.
    ```
-   - 위 `title:` 은 생략 가능(생략 시 제목은 한국어로 표시). **본문만 넣어도 돼요.**
-   - 날짜·장소·링크 같은 **공통 정보는 `ko.md`에만** 두면 돼요. `en.md`엔 제목·본문만.
+   - `title:`과 `location:`은 각각 생략 가능하며, 생략한 값은 한국어로 표시돼요. **본문만 넣어도 돼요.**
+   - 날짜·링크 같은 **공통 정보는 `ko.md`에만** 두면 돼요.
 
 4. **사진**은 폴더에 같이 넣고(예: `poster.png`) `image:` 에 파일명을 적어요. 이미지는 언어 공통 — 한 번만.
 
@@ -129,6 +137,38 @@ A. ...
 - ⚠️ **이메일·전화번호는 절대 넣지 마세요.** 이 저장소는 공개예요.
 - 멤버가 나가면 그 폴더를 지우면 돼요.
 
+조직 연락처 allowlist 등 공개 콘텐츠 연락처 보호 규칙은
+[`docs/CONTENT_PRIVACY.md`](docs/CONTENT_PRIVACY.md)를 따릅니다.
+
+---
+
+## Thanks to에 감사 인사 추가
+
+`thanks/<영문-슬러그>/ko.md`:
+
+```markdown
+---
+name: 공개 동의를 받은 표시 이름
+type: volunteer
+contribution: 2026 Git 워크숍 현장 운영과 사진 촬영
+image: cover.webp
+order: 10
+published: true
+---
+
+행사가 매끄럽게 진행되도록 도와주셔서 감사합니다.
+```
+
+- **type**: `donor` / `volunteer` / `contributor` / `sponsor` / `partner` / `other`
+- **contribution**: 어떤 도움을 주었는지 짧게 적어요.
+- 본문: 카드에 표시할 감사 문구를 Markdown으로 적어요.
+- **image**: 선택. 폴더 안 사진을 지정하며, 없으면 PyLadies Seoul 로고가 표시돼요.
+- **order**: 작은 숫자가 먼저 표시돼요.
+- **published**: `false`면 사이트에 표시되지 않아요.
+- 영어는 선택 `en.md`에 `name`·`contribution` frontmatter와 영문 감사 문구를 적어요. 비워두면 한국어로 폴백해요.
+
+> ⚠️ 이름과 사진은 배포 즉시 공개됩니다. 당사자에게 공개 동의를 받은 자료만 추가하고, 이메일·전화번호 등 개인 연락처는 절대 넣지 마세요. 익명을 원하면 동의한 표시명을 사용하고 사진을 생략하세요.
+
 ---
 
 ## 행동강령(About) 고치기
@@ -142,3 +182,6 @@ A. ...
 1. 브랜치 만들고 파일 추가/수정
 2. PR 올리기 → 리뷰 → `main` 머지
 3. 몇 분 뒤 사이트에 반영 ✨
+
+`main` 머지 후 웹 저장소에 전달되는 커밋 SHA와 현재 수신 제한은
+[`docs/CONTENT_DISPATCH.md`](docs/CONTENT_DISPATCH.md)에 정리되어 있어요.

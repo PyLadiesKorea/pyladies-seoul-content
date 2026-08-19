@@ -116,6 +116,7 @@ related_events:
 ---
 name: 최예리
 type: maker
+order: 5
 intro: 한 줄 소개 (카드에 인용으로 표시)
 image: cover.webp
 links:
@@ -130,6 +131,9 @@ A. ...
 ```
 
 - **type**: `organizer` (운영진) / `maker` / `member`
+- **order**: `All the PyLadies are . . .` 목록의 전역 표시 순서. 역할과
+  관계없이 작은 숫자가 먼저이며, 공개 멤버끼리 겹치지 않는 양의 정수를 써요.
+  이 값은 `ko.md`에만 적고 한·영 페이지가 함께 사용해요.
 - **intro**: 짧은 인용(frontmatter) — 카드·목록에 표시. **인터뷰**: 본문(길게) — 상세페이지에만.
 - **image**: 사진 파일을 폴더에 넣고(예: `cover.webp`) 파일명을 적어요. 이미지는 언어 공통.
 - **links 플랫폼**: `github` `linkedin` `twitter` `discord`

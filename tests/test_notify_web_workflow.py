@@ -31,7 +31,7 @@ def workflow_run_script() -> str:
 
 
 class NotifyWebWorkflowTests(unittest.TestCase):
-    def run_dispatch(self, *, token: str, commit: str):
+    def run_dispatch(self, *, token: str, commit: str, branch: str):
         with tempfile.TemporaryDirectory() as temporary_directory:
             temporary_path = Path(temporary_directory)
             fake_gh = temporary_path / "gh"
@@ -51,6 +51,7 @@ class NotifyWebWorkflowTests(unittest.TestCase):
                     "CAPTURE_ARGUMENTS": str(arguments_path),
                     "CAPTURE_PAYLOAD": str(payload_path),
                     "GH_TOKEN": token,
+                    "GITHUB_REF_NAME": branch,
                     "GITHUB_SHA": commit,
                     "PATH": f"{temporary_path}:{environment['PATH']}",
                 }
@@ -74,11 +75,16 @@ class NotifyWebWorkflowTests(unittest.TestCase):
 
             return result, payload, arguments
 
-    def test_dispatch_payload_includes_exact_content_commit(self):
+    def test_workflow_triggers_main_and_dev_pushes(self):
+        workflow = WORKFLOW_PATH.read_text(encoding="utf-8")
+
+        self.assertIn("branches: [main, dev]", workflow)
+
+    def test_main_dispatches_prod_event_with_exact_content_commit(self):
         commit = "0123456789abcdef" * 2 + "01234567"
 
         result, payload, arguments = self.run_dispatch(
-            token="test-token", commit=commit
+            token="test-token", commit=commit, branch="main"
         )
 
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -89,14 +95,33 @@ class NotifyWebWorkflowTests(unittest.TestCase):
                 "client_payload": {"content_commit": commit},
             },
         )
-        self.assertIn(
-            "repos/PyLadiesKorea/pyladies-seoul-web/dispatches", arguments
+        self.assertNotEqual(payload["event_type"], "content-dev-updated")
+        self.assertIn("repos/PyLadiesKorea/pyladies-seoul-web/dispatches", arguments)
+
+    def test_dev_dispatches_dev_event_with_exact_content_commit(self):
+        commit = "89abcdef0123456789abcdef0123456789abcdef"
+
+        result, payload, arguments = self.run_dispatch(
+            token="test-token", commit=commit, branch="dev"
         )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(
+            payload,
+            {
+                "event_type": "content-dev-updated",
+                "client_payload": {"content_commit": commit},
+            },
+        )
+        self.assertNotEqual(payload["event_type"], "content-updated")
+        self.assertIn("repos/PyLadiesKorea/pyladies-seoul-web/dispatches", arguments)
 
     def test_missing_token_fails_before_calling_github(self):
         commit = "0123456789abcdef" * 2 + "01234567"
 
-        result, payload, arguments = self.run_dispatch(token="", commit=commit)
+        result, payload, arguments = self.run_dispatch(
+            token="", commit=commit, branch="main"
+        )
 
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("WEB_DISPATCH_TOKEN is not configured", result.stdout)
@@ -105,7 +130,7 @@ class NotifyWebWorkflowTests(unittest.TestCase):
 
     def test_non_full_commit_sha_fails_before_calling_github(self):
         result, payload, arguments = self.run_dispatch(
-            token="test-token", commit="abc123"
+            token="test-token", commit="abc123", branch="dev"
         )
 
         self.assertNotEqual(result.returncode, 0)
@@ -113,13 +138,58 @@ class NotifyWebWorkflowTests(unittest.TestCase):
         self.assertIsNone(payload)
         self.assertIsNone(arguments)
 
-    def test_dispatch_contract_documents_default_branch_limitation(self):
+    def test_unknown_or_missing_branch_fails_before_calling_github(self):
+        commit = "0123456789abcdef" * 2 + "01234567"
+
+        for branch in ("feature/example", ""):
+            with self.subTest(branch=branch):
+                result, payload, arguments = self.run_dispatch(
+                    token="test-token", commit=commit, branch=branch
+                )
+
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("Unsupported content branch", result.stdout)
+                self.assertIsNone(payload)
+                self.assertIsNone(arguments)
+
+    def test_token_is_not_exposed_in_payload_arguments_or_output(self):
+        token = "distinct-secret-token-value"
+        commit = "0123456789abcdef" * 2 + "01234567"
+
+        result, payload, arguments = self.run_dispatch(
+            token=token, commit=commit, branch="main"
+        )
+
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertNotIn(token, json.dumps(payload))
+        self.assertNotIn(token, "\n".join(arguments))
+        self.assertNotIn(token, result.stdout)
+        self.assertNotIn(token, result.stderr)
+
+    def test_token_is_not_exposed_when_validation_fails(self):
+        token = "distinct-secret-token-value"
+
+        result, payload, arguments = self.run_dispatch(
+            token=token, commit="invalid-sha", branch="dev"
+        )
+
+        self.assertNotEqual(result.returncode, 0)
+        self.assertNotIn(token, result.stdout)
+        self.assertNotIn(token, result.stderr)
+        self.assertIsNone(payload)
+        self.assertIsNone(arguments)
+
+    def test_dispatch_contract_documents_environment_mapping_and_activation(self):
         contract = CONTRACT_PATH.read_text(encoding="utf-8")
 
+        for requirement_id in ("CD-001", "CD-002", "CD-003", "CD-004"):
+            self.assertIn(requirement_id, contract)
+
+        self.assertIn("`main` push는 `event_type: content-updated`", contract)
+        self.assertIn("`dev` push는 `event_type: content-dev-updated`", contract)
         self.assertIn("client_payload.content_commit", contract)
-        self.assertIn("40", contract)
         self.assertIn("default branch", contract)
-        self.assertIn(".github/workflows/deploy.yml", contract)
+        self.assertIn("merge push 자체", contract)
 
 
 if __name__ == "__main__":

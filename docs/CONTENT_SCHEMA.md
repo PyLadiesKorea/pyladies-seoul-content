@@ -48,7 +48,7 @@ README의 이벤트 번들 작성 규칙 중 폴더 slug와 필수 한국어 파
 | 요구사항 ID | 검증 | 상태 | 남은 일 |
 |---|---|---|---|
 | CONTENT-SCHEMA-001 | `tests/test_validate_content_schema.py`, `scripts/validate_content_schema.py`, `.github/workflows/validate-content.yml`; 현재 42개 번들 scan | Covered | frontmatter와 다른 카테고리는 의도적으로 검사하지 않는다. |
-| MEMBER-ORDER-001 | 콘텐츠 frontmatter, content/web 회귀 테스트, ko/en 정적 빌드 | Missing | 공개 멤버 값을 1~5로 정규화하고 웹의 type-first 정렬을 전역 order-first로 바꾼다. |
+| MEMBER-ORDER-001 | `tests/test_member_display_order.py`; web `tests/test_models.py`, `tests/test_views.py`, `tests/test_bakery_views.py`, `tests/test_content_roundtrip.py`; paired ko/en 정적 빌드 | Covered | dev 병합 후 고유 배포 URL에서 최종 순서를 재확인한다. |
 
 ## 변경 절차
 

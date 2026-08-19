@@ -1,5 +1,6 @@
 ---
 title: 2025 Year-End Party
+location: Seoul Public Activity Support Center, Meeting Room 1
 ---
 
 **🎉 2025 PyLadies Seoul Year-End Party 🎉**

@@ -1,5 +1,6 @@
 ---
 title: Networking Dinner & Co-working Meetup
+location: Cry Cheese Burger (Yangjae Station) → Twosome Place (Financial News Building)
 ---
 
 # You’re invited to the PyLadies Networking Lunch & Study Together 🍽️

@@ -1,5 +1,6 @@
 ---
 title: Django Open-Source Contribution Workshop (Beginner Friendly)
+location: Seoul Public Activity Support Center, Meeting Room 1
 ---
 
 "I've always wanted to try open source contribution someday..."

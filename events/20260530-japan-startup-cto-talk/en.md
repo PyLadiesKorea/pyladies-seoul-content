@@ -1,5 +1,6 @@
 ---
 title: 'Finding My Own Rhythm: From Non-Dev to CTO of a Japanese Startup'
+location: Gwanak Youth Center, 3rd Floor Multi-purpose Auditorium (1759 Nambusunhwan-ro, Gwanak-gu, Seoul)
 ---
 
 **[Find Your Own Rhythm, Not the Correct Answer]**

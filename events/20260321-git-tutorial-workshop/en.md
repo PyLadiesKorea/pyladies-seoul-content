@@ -1,5 +1,6 @@
 ---
 title: Git Tutorial Workshop
+location: Gwanak Youth Center 4F, Seminar Room (Sillim)
 ---
 
 **PyLadies Seoul: Git Tutorial Workshop**

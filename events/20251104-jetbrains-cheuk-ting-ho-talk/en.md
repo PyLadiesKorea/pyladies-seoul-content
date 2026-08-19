@@ -1,5 +1,6 @@
 ---
 title: Staying Irreplaceable in the AI Era — with JetBrains' Cheuk Ting Ho
+location: Dongguk University Information & Culture Center P, Room 304
 ---
 
 **Are You Afraid AI Will Replace Your Code?**

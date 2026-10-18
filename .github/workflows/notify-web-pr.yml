@@ -1,0 +1,94 @@
+name: Notify web to deploy content PR to dev
+
+# Metadata only: never check out or run code from the pull request here.
+on:
+  pull_request_target:
+    branches: [main, dev]
+    types: [opened, synchronize, reopened, edited, ready_for_review]
+
+# Reuse the token scoped to pyladies-seoul-web Contents: write.
+permissions: {}
+
+jobs:
+  dispatch:
+    if: >-
+      github.repository == 'PyLadiesKorea/pyladies-seoul-content' &&
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.base.repo.full_name == github.repository &&
+      github.event.pull_request.state == 'open' &&
+      (github.event.pull_request.base.ref == 'main' || github.event.pull_request.base.ref == 'dev')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger pyladies-seoul-web dev deploy
+        env:
+          GH_TOKEN: ${{ secrets.WEB_DISPATCH_TOKEN }}
+          PR_ACTION: ${{ github.event.action }}
+          PR_STATE: ${{ github.event.pull_request.state }}
+          PR_HEAD_REPOSITORY: ${{ github.event.pull_request.head.repo.full_name }}
+          PR_BASE_REPOSITORY: ${{ github.event.pull_request.base.repo.full_name }}
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          CONTENT_PR: ${{ github.event.pull_request.number }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+        run: |
+          set -euo pipefail
+
+          if [ "${GITHUB_EVENT_NAME:-}" != "pull_request_target" ]; then
+            echo "::error::Only pull_request_target events are supported"
+            exit 1
+          fi
+
+          case "${PR_ACTION:-}" in
+            opened|synchronize|reopened|edited|ready_for_review) ;;
+            *) echo "::error::Unsupported PR action"; exit 1 ;;
+          esac
+
+          if [ "${GITHUB_REPOSITORY:-}" != "PyLadiesKorea/pyladies-seoul-content" ] ||
+             [ "${PR_BASE_REPOSITORY:-}" != "$GITHUB_REPOSITORY" ]; then
+            echo "::error::Unexpected content repository"
+            exit 1
+          fi
+
+          if [ "${PR_HEAD_REPOSITORY:-}" != "$GITHUB_REPOSITORY" ]; then
+            echo "Skipping fork PR"
+            exit 0
+          fi
+
+          if [ "${PR_STATE:-}" != "open" ]; then
+            echo "::error::PR must be open"
+            exit 1
+          fi
+
+          case "${PR_BASE_REF:-}" in
+            main|dev) ;;
+            *) echo "::error::PR base must be main or dev"; exit 1 ;;
+          esac
+
+          if [[ ! "${CONTENT_PR:-}" =~ ^[1-9][0-9]{0,9}$ ]]; then
+            echo "::error::CONTENT_PR must be a positive integer of up to 10 digits"
+            exit 1
+          fi
+
+          if [[ ! "${PR_HEAD_SHA:-}" =~ ^[0-9a-fA-F]{40}$ ]]; then
+            echo "::error::PR_HEAD_SHA must be a 40-character commit SHA"
+            exit 1
+          fi
+
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::WEB_DISPATCH_TOKEN is not configured"
+            exit 1
+          fi
+
+          printf '%s\n' \
+            "{\"event_type\":\"content-pr-updated\",\"client_payload\":{\"content_pr\":${CONTENT_PR},\"content_commit\":\"${PR_HEAD_SHA}\"}}" | \
+            gh api \
+              --method POST \
+              --header "X-GitHub-Api-Version: 2022-11-28" \
+              --input - \
+              repos/PyLadiesKorea/pyladies-seoul-web/dispatches
+
+          {
+            printf 'Dispatch accepted for content PR #%s at `%s`.\n\n' "$CONTENT_PR" "$PR_HEAD_SHA"
+            printf '%s\n\n' 'A successful dispatch does not confirm a successful deployment.'
+            printf '%s\n\n' '[Check the dev deployment workflow](https://github.com/PyLadiesKorea/pyladies-seoul-web/actions/workflows/content-pr-dev.yml)'
+            printf '%s\n' '[Open the shared dev site](https://dev.pyladies-seoul.pages.dev/)'
+          } >> "$GITHUB_STEP_SUMMARY"

@@ -34,10 +34,12 @@ class NotifyWebPrWorkflowTests(unittest.TestCase):
             fake_gh = temporary_path / "gh"
             payload_path = temporary_path / "payload.json"
             arguments_path = temporary_path / "arguments.txt"
+            summary_path = temporary_path / "summary.md"
             fake_gh.write_text(
                 "#!/bin/sh\n"
                 'cat > "$CAPTURE_PAYLOAD"\n'
-                'printf "%s\\n" "$@" > "$CAPTURE_ARGUMENTS"\n',
+                'printf "%s\\n" "$@" > "$CAPTURE_ARGUMENTS"\n'
+                'exit "${FAKE_GH_EXIT_CODE:-0}"\n',
                 encoding="utf-8",
             )
             fake_gh.chmod(0o755)
@@ -50,6 +52,7 @@ class NotifyWebPrWorkflowTests(unittest.TestCase):
                     "GITHUB_EVENT_NAME": "pull_request_target",
                     "GITHUB_REPOSITORY": REPOSITORY,
                     "GITHUB_SHA": "a" * 40,
+                    "GITHUB_STEP_SUMMARY": str(summary_path),
                     "PR_ACTION": "opened",
                     "PR_STATE": "open",
                     "PR_HEAD_REPOSITORY": REPOSITORY,
@@ -80,13 +83,14 @@ class NotifyWebPrWorkflowTests(unittest.TestCase):
                 if arguments_path.exists()
                 else None
             )
-            return result, payload, arguments
+            summary = summary_path.read_text(encoding="utf-8") if summary_path.exists() else ""
+            return result, payload, arguments, summary
 
     def test_supported_events_dispatch_exact_pr_head_not_target_sha(self):
         for base in ("main", "dev"):
             for action in ("opened", "synchronize", "reopened", "edited", "ready_for_review"):
                 with self.subTest(base=base, action=action):
-                    result, payload, arguments = self.run_dispatch(
+                    result, payload, arguments, summary = self.run_dispatch(
                         PR_BASE_REF=base, PR_ACTION=action
                     )
                     self.assertEqual(result.returncode, 0, result.stderr)
@@ -105,15 +109,31 @@ class NotifyWebPrWorkflowTests(unittest.TestCase):
                             "repos/PyLadiesKorea/pyladies-seoul-web/dispatches",
                         ],
                     )
+                    self.assertIn("Dispatch accepted for content PR #17", summary)
+                    self.assertIn(HEAD_SHA, summary)
+                    self.assertIn("https://dev.pyladies-seoul.pages.dev/", summary)
+                    self.assertIn("actions/workflows/content-pr-dev.yml", summary)
+                    self.assertIn("does not confirm a successful deployment", summary)
+
+    def test_positive_pr_number_upper_bound_is_accepted(self):
+        result, payload, _, _ = self.run_dispatch(CONTENT_PR="9999999999")
+        self.assertEqual(result.returncode, 0, result.stderr)
+        self.assertEqual(payload["client_payload"]["content_pr"], 9999999999)
+
+    def test_failed_dispatch_does_not_report_acceptance(self):
+        result, _, _, summary = self.run_dispatch(FAKE_GH_EXIT_CODE="1")
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(summary, "")
 
     def test_fork_skips_without_requiring_token(self):
-        result, payload, arguments = self.run_dispatch(
+        result, payload, arguments, summary = self.run_dispatch(
             PR_HEAD_REPOSITORY="someone/fork", GH_TOKEN=""
         )
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn("Skipping fork PR", result.stdout)
         self.assertIsNone(payload)
         self.assertIsNone(arguments)
+        self.assertEqual(summary, "")
 
     def test_invalid_event_metadata_never_dispatches(self):
         invalid_metadata = (
@@ -136,6 +156,7 @@ class NotifyWebPrWorkflowTests(unittest.TestCase):
             {"CONTENT_PR": "0"},
             {"CONTENT_PR": "-1"},
             {"CONTENT_PR": "01"},
+            {"CONTENT_PR": "10000000000"},
             {"CONTENT_PR": "1.5"},
             {"CONTENT_PR": '17,"injected":true'},
             {"CONTENT_PR": '$(touch injected)'},
@@ -143,10 +164,11 @@ class NotifyWebPrWorkflowTests(unittest.TestCase):
         )
         for overrides in invalid_metadata:
             with self.subTest(overrides=overrides):
-                result, payload, arguments = self.run_dispatch(**overrides)
+                result, payload, arguments, summary = self.run_dispatch(**overrides)
                 self.assertNotEqual(result.returncode, 0)
                 self.assertIsNone(payload)
                 self.assertIsNone(arguments)
+                self.assertEqual(summary, "")
 
 
 if __name__ == "__main__":

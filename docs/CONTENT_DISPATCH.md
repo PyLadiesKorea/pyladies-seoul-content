@@ -8,7 +8,7 @@
 ## main 반영 후 prod 배포
 
 `.github/workflows/notify-web.yml`은 `main` push만 처리한다.
-기존 prod 배포 계약은 다음과 같다.
+웹 저장소의 `.github/workflows/deploy.yml`이 받는 기존 prod 배포 계약은 다음과 같다.
 
 - `event_type`은 `content-updated`다.
 - `client_payload.content_commit`은 해당 `push` 실행의 `GITHUB_SHA`와 정확히 같은
@@ -37,7 +37,7 @@
 - 이 워크플로는 PR 메타데이터만 읽는다. PR 코드 checkout이나 실행은 하지 않는다.
 - 실행 단계에서도 이벤트, action, 저장소, 열린 상태, 대상 브랜치를 검사한다.
 - `event_type`은 `content-pr-updated`다.
-- `client_payload.content_pr`은 PR 번호인 양의 정수다.
+- `client_payload.content_pr`은 PR 번호인 10자리 이하의 양의 정수다.
 - `client_payload.content_commit`은 이벤트의 `pull_request.head.sha`인 40자리 SHA다.
   PR 대상 브랜치의 커밋을 나타내는 `GITHUB_SHA`를 대신 사용하면 안 된다.
 - 번호나 SHA가 올바르지 않거나 `WEB_DISPATCH_TOKEN`이 없으면 디스패치하지 않는다.
@@ -69,13 +69,19 @@ dev에서도 글은 `published: true`일 때만 표시한다. `published: false`
 
 1. 콘텐츠 PR의 대상 브랜치인 `main` 또는 `dev`에 신뢰된 송신 워크플로가 있어야 한다.
    새 송신 워크플로를 추가하는 PR 자체의 코드를 실행하는 방식은 사용하지 않는다.
-2. 웹 저장소의 default branch에 `.github/workflows/deploy.yml` 수신 워크플로와
-   `content-pr-updated` 처리 코드가 있어야 한다. GitHub의 `repository_dispatch`는
+2. 웹 저장소의 default branch에 `.github/workflows/content-pr-dev.yml` 수신 워크플로와
+   PR 검증 스크립트가 있어야 한다. 검증 스크립트는 수신 워크플로의 커밋에서 가져온다.
+   GitHub의 `repository_dispatch`는
    수신 워크플로 파일이 default branch에 있을 때만 실행된다.
-3. 웹 저장소의 `dev`에 해당 콘텐츠 커밋을 빌드하고 dev로 배포하는 코드가 있어야 한다.
+3. 사이트 빌드는 웹 저장소의 `dev` 코드를 별도로 checkout해서 기존 콘텐츠
+   가져오기와 배포 설정을 사용한다. PR 검증 스크립트를 `dev`에 추가할 필요는 없다.
 4. 콘텐츠 저장소의 `WEB_DISPATCH_TOKEN`과 웹 저장소의 dev 배포 환경 설정이
    준비되어 있어야 한다.
 
 송신 요청 성공만으로 배포 성공을 판단하지 않는다. 활성화 후 실제 콘텐츠 PR로 웹
 저장소의 dev 배포 실행과 게시된 페이지를 확인해야 한다. `main` 대상 송신 경로와
 prod 변경의 활성화는 별도의 승격 절차를 따른다.
+
+송신 workflow의 실행 요약에는 요청한 PR 번호와 커밋, 웹 저장소의 배포 실행 목록,
+공용 dev 링크를 표시한다. 이는 디스패치 접수 확인이며 실제 배포 성공 여부는 웹
+저장소의 실행 결과에서 확인한다.

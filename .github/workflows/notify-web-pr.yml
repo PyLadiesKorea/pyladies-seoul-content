@@ -1,4 +1,4 @@
-name: Notify web to preview content PR
+name: Notify web to deploy content PR to dev
 
 # Metadata only: never check out or run code from the pull request here.
 on:
@@ -63,8 +63,8 @@ jobs:
             *) echo "::error::PR base must be main or dev"; exit 1 ;;
           esac
 
-          if [[ ! "${CONTENT_PR:-}" =~ ^[1-9][0-9]*$ ]]; then
-            echo "::error::CONTENT_PR must be a positive integer"
+          if [[ ! "${CONTENT_PR:-}" =~ ^[1-9][0-9]{0,9}$ ]]; then
+            echo "::error::CONTENT_PR must be a positive integer of up to 10 digits"
             exit 1
           fi
 
@@ -85,3 +85,10 @@ jobs:
               --header "X-GitHub-Api-Version: 2022-11-28" \
               --input - \
               repos/PyLadiesKorea/pyladies-seoul-web/dispatches
+
+          {
+            printf 'Dispatch accepted for content PR #%s at `%s`.\n\n' "$CONTENT_PR" "$PR_HEAD_SHA"
+            printf '%s\n\n' 'A successful dispatch does not confirm a successful deployment.'
+            printf '%s\n\n' '[Check the dev deployment workflow](https://github.com/PyLadiesKorea/pyladies-seoul-web/actions/workflows/content-pr-dev.yml)'
+            printf '%s\n' '[Open the shared dev site](https://dev.pyladies-seoul.pages.dev/)'
+          } >> "$GITHUB_STEP_SUMMARY"

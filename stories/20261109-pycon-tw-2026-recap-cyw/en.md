@@ -1,8 +1,7 @@
 ---
 title: PyCon Taiwan 2026 Recap
+author: Yeonwoo Choi
 ---
-
-Written by Yeonwoo Choi
 
 I spent October 17–18, 2026 at PyCon Taiwan!
 

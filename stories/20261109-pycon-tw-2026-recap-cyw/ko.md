@@ -1,11 +1,10 @@
 ---
 title: PyCon Taiwan 2026 후기
+author: 최연우
 date: 2026-11-09
 image: tw-01.webp
 published: true
 ---
-
-글: 최연우
 
 2026년 10월 17일부터 18일까지 PyCon Taiwan에 다녀왔습니다.
 

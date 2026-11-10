@@ -1,5 +1,6 @@
 ---
 title: PyCon Taiwan 2026 포스터 발표 후기
+author: 채서영
 date: 2026-11-09
 image: 01.jpg
 published: true

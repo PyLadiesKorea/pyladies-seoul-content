@@ -1,5 +1,6 @@
 ---
 title: Presenting Our Poster at PyCon Taiwan 2026
+author: Seoyoung Chae
 ---
 
 Delighted to present our poster representing **PyLadies Seoul** at **PyCon Taiwan 2026**!

@@ -1,5 +1,6 @@
 ---
 title: PyCon Taiwan 2026 Recap
+author: Jiho Park
 ---
 
 I attended PyCon Taiwan 2026.

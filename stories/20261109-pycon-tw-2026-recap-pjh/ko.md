@@ -1,5 +1,6 @@
 ---
 title: PyCon Taiwan 2026 참석 후기
+author: 박지호
 date: 2026-11-09
 image: 01.webp
 published: true

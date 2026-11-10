@@ -13,15 +13,15 @@ published: true
 
 첫날, 설레는 마음으로 어색한 포즈를 잡고 한 컷.
 
-![PyCon Taiwan 첫날 기념 사진](tw-01.webp)
+![PyCon Taiwan 첫날 기념 사진](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-01.webp)
 
 제가 금과 밀접한 분야에서 일하고 있다 보니 명찰은 금색으로 꾸며봤습니다. 다음에는 Korean Plz 스티커를 구비해서 다녀야겠습니다.
 
-![금색으로 꾸민 명찰](tw-02.webp)
+![금색으로 꾸민 명찰](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-02.webp)
 
 아무래도 일단 한국인부터 찾게 되더라고요. 한국 파이콘 준비위원회가 운영하는 Python Asia 부스부터 방문했습니다.
 
-![Python Asia 부스](tw-03.webp)
+![Python Asia 부스](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-03.webp)
 
 글로벌 파이레이디와의 만남! PyLadies Kaohsiung 분들은 얼마나 에너지 넘치고 귀엽고 밝은지 몰라요. 몇몇 분은 이번에 열리는 엄청난 글로벌 컨퍼런스에 오신다고 들은 것 같은데, 그때는 더 용기 내서 친해져 보겠습니다.
 
@@ -29,15 +29,15 @@ published: true
 >
 > 📅 **2026년 11월 29일**, 아시아의 파이레이디들이 한자리에 모입니다!
 
-![PyLadies Kaohsiung과 함께](tw-04.webp)
+![PyLadies Kaohsiung과 함께](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-04.webp)
 
 PyLadies Seoul 포스터 세션 앞에서 어색하게 한 컷. (파이콘에서 산 파이레이디 반팔을 입고 갈걸...아직도 후회 중입니다.)
 
-![PyLadies Seoul 포스터 앞에서](tw-05.webp)
+![PyLadies Seoul 포스터 앞에서](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-05.webp)
 
 알찬 포스터 세션을 보내는 PyLadies Seoul.
 
-![PyLadies Seoul 포스터 세션](tw-06.webp)
+![PyLadies Seoul 포스터 세션](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-06.webp)
 
 ## 인상 깊었던 강연
 
@@ -45,7 +45,7 @@ PyLadies Seoul 포스터 세션 앞에서 어색하게 한 컷. (파이콘에서
 
 ### 1. Stop Trusting Your LLM. Start Breaking It. (Cyrus Mante)
 
-![Stop Trusting Your LLM 강연](tw-07.webp)
+![Stop Trusting Your LLM 강연](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-07.webp)
 
 LLM 기반 애플리케이션의 보안 취약점을 공격자의 관점에서 검증하는 AI Red-Teaming 강연입니다. Prompt Injection, Jailbreak, 정보 유출 등 다양한 취약점을 garak, deepteam, deepeval 같은 Python 도구로 자동화해 테스트하는 방법을 소개했습니다.
 
@@ -53,7 +53,7 @@ LLM 기반 애플리케이션의 보안 취약점을 공격자의 관점에서 �
 
 ### 2. Avoiding Zero-Trade Policies in RL with a Decoupled MLOps Architecture (Sho Tanaka)
 
-![Avoiding Zero-Trade Policies 강연](tw-08.webp)
+![Avoiding Zero-Trade Policies 강연](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-08.webp)
 
 강화학습 기반 자동매매에서 AI가 거래를 하지 않는 방향으로 수렴하는 Zero-Trade Collapse 문제와 이를 개선하기 위한 아키텍처를 다룬 강연입니다.
 
@@ -67,12 +67,12 @@ AI는 매매 신호 생성에 집중하고, 실제 주문 실행과 리스크 �
 
 마지막으로 굿즈 컷이 빠질 수 없죠.
 
-![PyCon Taiwan 굿즈](tw-10.webp)
+![PyCon Taiwan 굿즈](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-10.webp)
 
 밥도 맛있었어요. 도시락을 들고 한 컷 찍고, 간식도 야무지게 챙겨 먹었습니다.
 
-![도시락](tw-09.webp)
+![도시락](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-09.webp)
 
-![간식](tw-12.webp)
+![간식](/content-media/stories/20261109-pycon-tw-2026-recap-cyw/tw-12.webp)
 
 너무 즐겁고 유익한 시간이었습니다. PyLadies Seoul, 고맙고 사랑합니다!

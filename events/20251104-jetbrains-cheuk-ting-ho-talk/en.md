@@ -32,7 +32,7 @@ First-come, first-served, limited to 20 participants
 
 **\| Payment Method**
 
-* Toss Bank 1001-0090-0506 (Account holder: Sujin Yoon),
+* Toss Bank 1001-0090-0506 (Account holder: Soojin Yoon),
 * If you are unable to pay the participation fee due to financial difficulties or other reasons, please contact us at seoul@pyladies.com,
 
 **\| Timetable**

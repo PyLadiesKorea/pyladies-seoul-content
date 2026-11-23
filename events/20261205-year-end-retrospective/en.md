@@ -9,7 +9,7 @@ Let's share what we learned and experienced this year. Join PyLadies Seoul for a
 
 ## Event details
 
-- Date: Saturday, December 5, 2026, 1:00 PM to 5:00 PM KST
+- Date: Saturday, December 5, 2026, 2:00 PM to 5:00 PM KST
 - Venue: Turing's Apple
 - Address: B1, 26 Sangwon-gil, Seongdong-gu, Seoul
 - General admission: KRW 10,000

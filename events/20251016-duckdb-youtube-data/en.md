@@ -27,7 +27,7 @@ Fee
 * **Early Bird: 25,000 KRW** (until **Oct 13, Mon, midnight**)
 * **Regular: 30,000 KRW** (from Oct 14 onward)
 
-Toss Bank 1001-0090-0506 (Account holder: Sujin Yoon)
+Toss Bank 1001-0090-0506 (Account holder: Soojin Yoon)
 💡 If you’re unable to pay the participation fee, please contact us at **seoul@pyladies.com**.
 
 Recommended For

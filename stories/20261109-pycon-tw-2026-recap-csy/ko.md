@@ -3,6 +3,18 @@
 PyCon Taiwan 2026에서 **PyLadies Seoul** 포스터를 발표하였습니다.
 
 이번 대만 방문을 함께한 PyCon Taiwan 2026 원정대 수진님, 화영님, 지호님, 연우님께 감사드립니다. 모두 정말 열심히 준비했고, 함께 PyLadies Seoul을 전세계로 알릴 수 있어서 무척 기쁩니다! ✈️
+=======
+---
+title: PyCon Taiwan 2026 포스터 발표 후기
+author: 채서영
+date: 2026-11-09
+image: 01.jpg
+published: true
+---
+
+PyCon Taiwan 2026에서 **PyLadies Seoul** 포스터를 발표하였습니다.
+
+이번 대만 방문을 함께한 PyCon Taiwan 2026 원정대 수진님, 화영님, 지호님, 연우님께 감사드립니다. 모두 정말 열심히 준비했고, 함께 PyLadies Seoul을 전세계로 알릴 수 있어서 무척 기쁩니다!
 
 멋지고 따뜻한 행사를 준비해 주신 Winnie 님과 모든 준비위원회 분들께도 감사드립니다. PyRun부터 PyNight까지, 이번 방문의 모든 순간이 잊지 못할 추억으로 남았습니다.
 

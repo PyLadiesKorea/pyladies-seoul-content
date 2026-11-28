@@ -32,7 +32,7 @@ Lee Da-hye is an author who never stops speaking and writing about women's right
 * **Location:** PyLadies Seoul Discord Server (⁠`Monthly-book-club` Voice Channel)
 * **Who can join:** Any woman interested.
 * **Fee:** 5,000 KRW
-* **Bank Info:** Toss Bank 1001-0090-0506 (Account Holder: Sujin Yun)
+* **Bank Info:** Toss Bank 1001-0090-0506 (Account holder: Soojin Yoon)
 * **Free for Students & Job Seekers:** To support students and job seekers, we offer free participation. Please fill out the application form and email us at the address below. Once approved, the participation fee will be waived.
 * **Inquiries:** seoul@pyladies.com
 
